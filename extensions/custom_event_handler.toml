@@ -1,0 +1,10 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[event_handler]]
+name="custom_handler"
+subscriptions=["POST_AUTHENTICATION"]
+[event_handler.properties]
+publisher_url="http://analytic.example.com/login"
+
