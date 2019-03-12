@@ -1,0 +1,7 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[oauth.new_response_type]]
+name = "code id_token"
+handler_class = "handler1"

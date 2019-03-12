@@ -1,0 +1,9 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[custom_events.schemes]]
+name="custom1"
+subscriptions=["sub1","sub2"]
+[custom_events.schemes.properties]
+enable=true

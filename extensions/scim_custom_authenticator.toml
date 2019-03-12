@@ -1,0 +1,9 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[scim.custom_authenticator]]
+class = "class1"
+priority = 10
+[scim.custom_authenticator.properties]
+AuthorizationServer = "local://services"
