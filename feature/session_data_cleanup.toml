@@ -1,0 +1,15 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[session_data.cleanup]
+types = ["expired_data","invalidated_data", "temp_data"]
+expired_data.expiry_time_mins = 20160
+expired_data.frequency_mins = 1140
+expired_data.delete_chunk_size = 8192
+temp_data.expiry_time_mins = 40
+temp_data.db_pool_size = 20
