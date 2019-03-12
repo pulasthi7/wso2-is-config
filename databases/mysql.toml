@@ -1,0 +1,22 @@
+[deployment]
+pattern = "DEV"
+hostname = "wso2is.example.com"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[database.shared_db]
+type = "mysql"
+hostname = "mysql.example.com"
+database = "wso2isdb"
+password = "$secret{db_password}"
+
+[database.identity_db]
+type = "mysql"
+hostname = "mysql.example.com"
+database = "wso2isdb"
+password = "$secret{db_password}"
+
+[secrets]
+db_password = "encrypted_value_2"

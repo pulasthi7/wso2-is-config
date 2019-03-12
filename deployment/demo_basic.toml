@@ -1,0 +1,7 @@
+[deployment]
+pattern = "DEV"  #possible values, DEV,HA,HA_WITH_ANALYTICS
+hostname = "localhost"
+
+[super_admin]
+username = "admin"
+password = "admin"

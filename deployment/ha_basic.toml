@@ -1,0 +1,39 @@
+[deployment]
+pattern = "HA"
+hostname = "wso2is.example.com"
+local_ip = "192.168.1.1"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[user_store]
+type = "read_write_ldap"
+connection_url = "ldap://ldap.example.com:389"
+connection_name = "uid=admin,ou=wso2is"
+connection_password = "$secret{ldap_password}"
+base_dn = "dc=example,dc=com"
+
+[database.shared_db]
+type = "mysql"
+hostname = "mysql.example.com"
+database = "wso2regdb"
+password = "$secret{db_password}"
+
+[database.identity_db]
+type = "mysql"
+hostname = "mysql.example.com"
+database = "wso2isdb"
+password = "$secret{db_password}"
+
+[keystore.tls]
+name = "keystore.jks"
+password = "$secret{keystore_password}"
+
+[cluster]
+members = ["192.168.1.1:4000","192.168.1.2:4000"]
+
+[secrets]
+keystore_password = "encrypted_value_1"
+db_password = "encrypted_value_2"
+ldap_password = "encrypted_value_3"

@@ -1,0 +1,17 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[user_store]
+type = "active_directory"
+connection_url = "ldap://ldap.example.com:389"
+connection_name = "cn=Administrator,ou=Users, dc=EXAMPLE, dc=COM"
+connection_password = "$secret{ldap_password}"
+base_dn = "dc=EXAMPLE, dc=COM"
+
+[secrets]
+ldap_password = "encrypted_value_1"
