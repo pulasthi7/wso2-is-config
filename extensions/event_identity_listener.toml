@@ -1,0 +1,11 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[event_listener]]
+id = "custom_audit_listener"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityMessageHandler"
+name = "com.example.identity.AuditListener"
+order = 99
+[event_listener.properties]
+file_name = "login_audit.log"
