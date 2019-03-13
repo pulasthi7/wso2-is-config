@@ -1,0 +1,7 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[oauth.response_type]]
+name = "code xyz"
+handler_class = "com.example.identity.XYZResponseType"

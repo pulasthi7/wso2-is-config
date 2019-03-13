@@ -1,8 +1,0 @@
-[deployment]
-pattern = "DEV"
-hostname = "localhost"
-
-[[oauth.new_grant_type]]
-name = "client_credentials"
-handler_class = ""
-

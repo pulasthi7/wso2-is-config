@@ -1,0 +1,9 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[scim.authenticator]]
+class = "com.example.identity.scim.Authenticator"
+priority = 10
+[scim.custom_authenticator.properties]
+AuthorizationServer = "http://auth.example.com"
