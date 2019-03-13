@@ -1,0 +1,15 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[pip]
+attribute_designators = ["org.wso2.carbon.identity.entitlement.pip.CustomAttributeFinder", "org.wso2.carbon.identity.entitlement.pip.AttributeFinder"]
+resource_finders = ["org.wso2.carbon.identity.entitlement.pip.CustomResourceFinder"]
+
+[pap]
+entitlement_data_finders = ["org.wso2.carbon.identity.entitlement.pap.CustomEntitlementDataFinder"]
+policy_publishers = ["org.wso2.carbon.identity.entitlement.policy.publisher.CustomBasicPolicyPublisherModule"]
+status_data_handlers = ["org.wso2.carbon.identity.entitlement.CustomStatusDataHandler"]
+
+[pdp]
+policy_finder = ["org.wso2.carbon.identity.entitlement.policy.store.CustomPolicyStoreManageModule"]
