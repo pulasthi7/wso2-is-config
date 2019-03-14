@@ -1,0 +1,7 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[[oauth.token_validator]]
+type = "jwt"
+class = "org.wso2.carbon.identity.oauth2.validators.CustomOAuth2JWTTokenValidator"

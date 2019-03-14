@@ -1,0 +1,6 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[oauth]
+scope_handlers = ["org.wso2.carbon.identity.oauth2.validators.CustomOIDCScopeHandler"]
