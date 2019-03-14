@@ -1,0 +1,34 @@
+[deployment]
+pattern = "DEV"
+
+[saml]
+entity_id = "$conf{deployment.hostname}"
+attribute_claim_dialect = ""
+tenant_partitioning = false
+response_validity = 5
+artifact_validity = 4
+
+[saml.endpoints]
+idp_url = ""
+logout_url = ""
+notification_url = ""
+artifact_resolution_url = ""
+ecp = ""
+
+[saml.slo]
+retry_count = 5
+retry_interval = 60000
+hostname_verification = true
+
+[saml.extensions]
+assertion_builder = ""
+response_builder = ""
+encrypter = ""
+signer = ""
+signature_validator = ""
+
+[saml.algorithms]
+signing = ""
+digest = ""
+assertion_encryption = ""
+key_encryption = ""

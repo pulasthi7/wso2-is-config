@@ -1,0 +1,13 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[recaptcha]
+site_key = "fqwgmow4r23"
+secret_key = "$Egwo4^2ndw"
+api_url = "http://example.com/api"
+verify_url = "http://example.com/verify"

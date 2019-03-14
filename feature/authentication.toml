@@ -1,0 +1,11 @@
+[deployment]
+pattern = "DEV"
+
+[authentication]
+map_federated_users_to_local = true
+prompt_consent = true
+crypto_domain = "sp"     # sp/user
+
+[session_data.persistance]
+pool_size = 0
+temporary_data_persistance = true

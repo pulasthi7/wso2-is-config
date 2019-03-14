@@ -1,0 +1,11 @@
+[deployment]
+pattern = "DEV"
+hostname = "localhost"
+
+[super_admin]
+username = "admin"
+password = "admin"
+
+[session.timeout]
+idle_timeout = 15
+remember_me_timeout_min = 20160
