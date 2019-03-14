@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [[oauth.grant_type]]
 name = "xyz_token"

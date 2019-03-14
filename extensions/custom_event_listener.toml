@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [[event_listener]]
 id = "custom_audit_listener"

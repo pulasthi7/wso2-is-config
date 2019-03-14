@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [[event_handler]]
 name="custom_handler"

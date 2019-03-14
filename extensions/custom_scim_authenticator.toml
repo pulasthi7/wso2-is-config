@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [[scim.authenticator]]
 class = "com.example.identity.scim.Authenticator"

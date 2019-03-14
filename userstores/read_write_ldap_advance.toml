@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [super_admin]
 username = "admin"

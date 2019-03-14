@@ -1,6 +1,0 @@
-[deployment]
-pattern = "DEV"
-hostname = "localhost"
-
-[oauth.assertions]
-enable_for = ['UserName']

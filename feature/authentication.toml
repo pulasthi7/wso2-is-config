@@ -9,3 +9,16 @@ crypto_domain = "sp"     # sp/user
 [session_data.persistance]
 pool_size = 0
 temporary_data_persistance = true
+
+[session_data.cleanup]
+types = ["expired_data","invalidated_data", "temp_data"]
+expired_data.expiry_time_mins = 20160
+expired_data.frequency_mins = 1140
+expired_data.delete_chunk_size = 8192
+temp_data.expiry_time_mins = 40
+temp_data.db_pool_size = 20
+
+
+[session.timeout]
+idle_timeout = 15
+remember_me_timeout_min = 20160

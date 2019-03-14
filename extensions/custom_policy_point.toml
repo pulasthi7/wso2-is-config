@@ -1,6 +1,5 @@
 [deployment]
 pattern = "DEV"
-hostname = "localhost"
 
 [pip]
 attribute_designators = ["org.wso2.carbon.identity.entitlement.pip.CustomAttributeFinder", "org.wso2.carbon.identity.entitlement.pip.AttributeFinder"]
