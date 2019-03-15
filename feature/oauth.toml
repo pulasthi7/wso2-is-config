@@ -1,0 +1,121 @@
+[deployment]
+pattern = "DEV"
+timestamp_skew = 0
+
+[oauth]
+access_token_type = "default"  # default/self-contained
+renew_refresh_token = true
+hash_keys = false       # hash client secret, tokens, authz code
+token_embedded_assertions = []    # username
+
+[oauth.token_persistance]
+access_token_persist_type = "token"     # token/alias_only/none
+persist_encrypted_tokens = false
+#partitioning_enabled_tenants = ["A:foo.com", "B:bar.com"]
+# pool_size = 0
+retry_count_on_failure = 5
+#token_persistance_processor = class.name
+
+
+[oauth.token_cleanup]
+enable = true
+retain_access_tokens = true
+
+[oauth.extensions]
+token_generator = "org.wso2.carbon.identity.oauth2.token.JWTTokenIssuer"
+token_value_generator = "org.wso2.carbon.identity.oauth.tokenvaluegenerator.SHA256Generator"
+saml2_token_handler = "class.name"
+
+[oauth.endpoints]
+oauth1_request_token_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/request-token"
+oauth1_authorize_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/authorize-url"
+oauth1_access_token_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/access-token"
+oauth2_authz_url = ""
+oauth2_token_url = ""
+oauth2_revoke_url = ""
+oauth2_introspect_url = ""
+oauth2_user_info_url = ""
+oidc_check_session_url = ""
+oidc_logout_url = ""
+oauth2_consent_page = ""
+oauth2_error_page = ""
+oidc_consent_page = ""
+oidc_logout_consent_page = ""
+oidc_logout_page = ""
+oidc_web_finger_url = ""
+oauth2_DCREP_url = ""
+oauth2_jwks_page = ""
+oidc_discovery_url = ""
+
+[oauth.token_validation]
+authz_code_validity = 300
+app_access_token_validity = 3600
+user_access_token_validity = 3600
+refresh_token_validity = 84600
+id_token_validity = 3600
+build_subject_id_from_sp_config = false
+
+[oauth.consent]
+enabled_grant_types = ["implicit","authorization_code"]
+
+[oauth.validators]
+token_validators = ["jwt","bearer"]
+scope_validatoes = ["jdbc","xacml"]
+
+[oauth.handlers]
+callback_handlers = ["default"]
+scope_handlers = ["oidc"]
+
+[oauth.oidc]
+audiences = []
+issuer_id = ""
+
+[oauth.oidc.algorithms]
+signature_algorithm = "SHA256withRSA"
+default_encryption_algorithm = "RSA-OAEP"
+default_encryption_method = "A128GCM"
+supported_encryption_algorithms = ["RSA1_5", "RSA-OAEP"]
+supported_encryption_methods = ["A128GCM","A192GCM","A256GCM","A128CBC-HS256","A128CBC+HS256"]
+user_info_jwt_algorithm = "SHA256withRSA"
+
+[oauth.oidc.extensions]
+oidc_id_token_builder = ""
+id_token_claim_callback_handler = ""
+user_info_claim_retriever = ""
+user_info_request_validator = ""
+user_info_access_token_validator = ""
+user_info_response_builder = ""
+request_object_validator = ""
+
+
+
+
+
+#        <AuthorizationContextTokenGeneration>
+#            <Enabled>false</Enabled>
+#            <TokenGeneratorImplClass>org.wso2.carbon.identity.oauth2.authcontext.JWTTokenGenerator</TokenGeneratorImplClass>
+#            <ClaimsRetrieverImplClass>org.wso2.carbon.identity.oauth2.authcontext.DefaultClaimsRetriever</ClaimsRetrieverImplClass>
+#            <ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI>
+#            <SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm>
+#            <AuthorizationContextTTL>15</AuthorizationContextTTL>
+#        </AuthorizationContextTokenGeneration>
+#
+#        <SAML2Grant>
+#            <!--SAML2TokenHandler></SAML2TokenHandler-->
+#            <!-- UserType conifg decides whether the SAML assertion carrying user is local user or a federated user.
+#            Only Local Users can access claims from local userstore. LEGACY users will have to have tenant domain appended username.
+#            They will not be able to access claims from local userstore. To get claims by mapping users with exact same username from local
+#            userstore (for non LOCAL scenarios) use mapFederatedUsersToLocal config -->
+#            <!--<UserType>LOCAL</UserType>-->
+#            <UserType>FEDERATED</UserType>
+#            <!--UserType>LEGACY</UserType-->
+#            #todo can be done with the map federated user to local?
+#        </SAML2Grant>
+#
+#        <SkipUserConsent>false</SkipUserConsent>
+#                    <!-- Sign the ID Token with Service Provider Tenant Private Key-->
+#                    <SignJWTWithSPKey>false</SignJWTWithSPKey>
+#                    <!--
+#                        Expiry period of the logout token used in OIDC Back Channel Logout in seconds.
+#                        Supported versions: IS 5.5.0 onwards
+#                    -->

@@ -1,6 +1,7 @@
 [deployment]
 pattern = "HA"
 hostname = "wso2is.example.com"
+proxy_port = "443"
 local_ip = "192.168.1.1"
 
 [super_admin]
@@ -30,10 +31,9 @@ password = "$secret{db_password}"
 name = "keystore.jks"
 password = "$secret{keystore_password}"
 
+[keystore.crypto]
+name = "keystore.jks"
+password = "$secret{key_password}"
+
 [cluster]
 members = ["192.168.1.1:4000","192.168.1.2:4000"]
-
-[secrets]
-keystore_password = "encrypted_value_1"
-db_password = "encrypted_value_2"
-ldap_password = "encrypted_value_3"
