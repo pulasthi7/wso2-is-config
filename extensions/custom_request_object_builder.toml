@@ -1,0 +1,6 @@
+[deployment]
+pattern = "DEV"
+
+[[oauth.oidc.request_object_builder]]
+type = "request_param_value_builder"
+class = "org.wso2.carbon.identity.openidconnect.CustomRequestParamRequestObjectBuilder"
