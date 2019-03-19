@@ -32,8 +32,8 @@ hostname_verification = true
 back_channel_slo_binding = "soap"
 
 [saml.extensions]
-assertion_builder = ""
-response_builder = ""
-encrypter = ""
-signer = ""
-signature_validator = ""
+assertion_builder = "org.wso2.carbon.identity.sso.saml.builders.assertion.DefaultSAMLAssertionBuilder"
+response_builder = "org.wso2.carbon.identity.sso.saml.builders.DefaultResponseBuilder"
+encrypter = "org.wso2.carbon.identity.sso.saml.builders.encryption.DefaultSSOEncrypter"
+signer = "org.wso2.carbon.identity.sso.saml.builders.signature.DefaultSSOSigner"
+signature_validator = "org.wso2.carbon.identity.sso.saml.validators.SAML2HTTPRedirectDeflateSignatureValidator"
