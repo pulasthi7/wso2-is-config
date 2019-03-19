@@ -1,24 +1,35 @@
+# Reference configuration for all SAML specific configuration in IS.
+# Note 1: For the context of this file, all non SAML configuration are expected to have default values
+# Note 2: All the SAML configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
 [deployment]
 pattern = "DEV"
 
 [saml]
-entity_id = "$conf{deployment.hostname}"
-attribute_claim_dialect = ""
-tenant_partitioning = false
-response_validity = 5
-artifact_validity = 4
+entity_id = "$ref{deployment.hostname}"
+response_validity = "5m"
+artifact_validity = "4m"
+
+[saml.assertion_query_profile]
+enable = false
 
 [saml.endpoints]
-idp_url = ""
-logout_url = ""
-notification_url = ""
-artifact_resolution_url = ""
-ecp = ""
+# Following configurations are required only if authentication endpoint is hosted seperately
+logout_url = "$ref{deployment.base_path}/authenticationendpoint/samlsso_logout.do"
+notification_url = "$ref{deployment.base_path}/authenticationendpoint/samlsso_notification.do"
+
+# Following configurations are required only if LB uses URL rewriting, instead of using reverse proxy
+artifact_resolution_url = "$ref{deployment.base_path}/samlartresolve"
+idp_url = "$ref{deployment.base_path}/samlsso"
+ecp_url = "$ref{deployment.base_path}/samlecp"
 
 [saml.slo]
-retry_count = 5
-retry_interval = 60000
+retry_attempts_count = 5
+retry_interval = "1m"
 hostname_verification = true
+back_channel_slo_binding = "soap"
 
 [saml.extensions]
 assertion_builder = ""
@@ -26,9 +37,3 @@ response_builder = ""
 encrypter = ""
 signer = ""
 signature_validator = ""
-
-[saml.algorithms]
-signing = ""
-digest = ""
-assertion_encryption = ""
-key_encryption = ""
