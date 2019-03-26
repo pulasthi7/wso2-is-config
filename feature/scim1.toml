@@ -1,0 +1,29 @@
+# Reference configuration for all SCIM1 specific configuration in IS.
+# Note 1: For the context of this file, all non SCIM1 configuration are expected to have default values
+# Note 2: All the SCIM1 configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
+[deployment]
+pattern = "DEV"
+
+[scim]
+enable = true
+enable_schema_extension = false
+passthrough_outbound_provisioning = false      # For Dumb mode
+
+[scim.endpoints]
+users_endpoint = "$ref{base_path}/wso2/scim/Users"
+groups_endpoint = "$ref{base_path}/wso2/scim/Groups"
+
+[scim.extensions]
+provisioning_handler = "org.wso2.carbon.identity.scim.common.impl.DefaultSCIMProvisioningHandler"       # Advanced
+
+[scim.authentication_handler.basic.properties]      # Advanced
+priority = 5
+
+[scim.authentication_handler.oauth.properties]      # Advanced
+priority = 10
+authorization_server = "local://services"
+
+

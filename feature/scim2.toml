@@ -1,0 +1,19 @@
+# Reference configuration for all SCIM2 specific configuration in IS.
+# Note 1: For the context of this file, all non SCIM2 configuration are expected to have default values
+# Note 2: All the SCIM2 configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
+[deployment]
+pattern = "DEV"
+
+[scim2]
+enable = true
+enable_schema_extension = false
+max_bulk_operations = 1000      # Advanced
+max_bulk_payload = 1048576      # Advanced
+documentation_uri = "https://docs.wso2.com/display/IS570/apidocs/SCIM2-endpoints/index.html"
+basic_auth_documentation_uri = "$ref{documentation_uri}"
+oauth_bearer_auth_documentation_uri = "$ref{documentation_uri}"
+
+
