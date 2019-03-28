@@ -1,0 +1,87 @@
+# Reference configuration for all identity management specific configuration in IS.
+# Note 1: For the context of this file, all non identity management configuration are expected to have default values
+# Note 2: All the identity management configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
+[deployment]
+pattern = "DEV"
+
+[identity_mgt]
+email_sender = "internal"       # Notification internally managed
+
+
+[identity_mgt.password_reset_email]
+enable_recaptcha = true
+reset_mail_validity = "1d"
+notify_on_reset = false
+
+
+[identity_mgt.password_reset_challenge_questions]
+notify_on_initiation = false
+min_required_answers = 2
+enable_recaptcha = true
+failures_before_recaptcha = 2
+
+
+[identity_mgt.password_reset_by_admin]
+enable_emailed_link_based_reset = false
+enable_emailed_otp_based_reset = false
+enable_offline_otp_based_reset = false
+
+
+[identity_mgt.username_recovery.email]
+enable_username_recovery = false
+enable_recaptcha = true
+
+
+[identity_mgt.account_locking]
+allowed_failed_attempts = 5
+auto_unlock_after = "5m"
+auto_unlock_time_increment_ratio = 2
+
+
+[identity_mgt.account_disabling]
+enable_account_disabling = false
+notify_on_disable = false
+
+
+[identity_mgt.password_history]
+hash_algorithm = "SHA-256"      # Advanced
+datasource_class = "org.wso2.carbon.identity.password.history.store.Impl.DefaultPasswordHistoryDataStore"   #Advanced
+
+
+[identity_mgt.password_policy]
+min_characters = 6
+max_characters = 12
+allow_username_inside_password = false
+no_of_previous_passwords_to_disallow = 5
+match_pattern = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{0,100}$"
+error_message_on_pattern_validation_failure = "'Password pattern policy violated. Password should contain a digit[0-9], a lower case letter[a-z], an upper case letter[A-Z], one of !@#$%&* characters'"
+
+pattern_validator = "org.wso2.carbon.identity.mgt.policy.password.DefaultPasswordPatternPolicy" #Advanced
+password_history_store_hash_algorithm = "SHA-256"      # Advanced
+password_history_datasource_class = "org.wso2.carbon.identity.password.history.store.Impl.DefaultPasswordHistoryDataStore"   #Advanced
+
+
+[identity_mgt.inactive_account_suspention]
+suspend_when_inactive_for = "90d"
+notify_when_inactive_for = ["30d","45d","60d","75d"]
+trigger_notifications_at = "20:00:00"   # Advanced
+
+
+[identity_mgt.user_onboarding]
+enable_email = false
+ask_password_from_user = false
+lock_on_creation = false
+verification_email_validity = "1d"
+ask_password_email_validity = "1d"
+password_generator = "org.wso2.carbon.user.mgt.common.DefaultPasswordGenerator"     # Advanced
+
+[identity_mgt.user_self_registration]
+enable_self_registration = false
+lock_on_creation = false
+enable_recaptcha = true
+verification_email_validity = "1d"
+
+# failLoginAttemptValidator should be inferred with captcha enabled
