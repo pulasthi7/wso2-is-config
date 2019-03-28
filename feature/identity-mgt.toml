@@ -71,7 +71,7 @@ trigger_notifications_at = "20:00:00"   # Advanced
 
 
 [identity_mgt.user_onboarding]
-enable_email = false
+enable_email_verification = false
 ask_password_from_user = false
 lock_on_creation = false
 verification_email_validity = "1d"
@@ -79,7 +79,7 @@ ask_password_email_validity = "1d"
 password_generator = "org.wso2.carbon.user.mgt.common.DefaultPasswordGenerator"     # Advanced
 
 [identity_mgt.user_self_registration]
-enable_self_registration = false
+allow_self_registration = false
 lock_on_creation = false
 enable_recaptcha = true
 verification_email_validity = "1d"
