@@ -1,121 +1,189 @@
 [deployment]
 pattern = "DEV"
-timestamp_skew = 0
+time_skew = "0m"    # Advanced
 
 [oauth]
+hash_tokens_and_secrets = false
+
+[oauth.token_generation]
 access_token_type = "default"  # default/self-contained
+access_token_value_type = "UUID" # MD5/SHA-256      #Advanced
+retry_count_on_persistance_failures = 5         #Advanced
+
+[oauth.token_validation]
+authorization_code_validity = "5m"
+app_access_token_validity = "1h"
+user_access_token_validity = "1h"
+refresh_token_validity = "1d"
+include_validation_context_as_jwt_in_reponse = true
+validation_response_jwt_validity = "15m"
+validation_response_signing_algorithm = "SHA256withRSA"
+validation_response_subject_identifier_format = "fqn"  # fqn/app_configured        #advanced
+
+[oauth.token_renewal]
 renew_refresh_token = true
-hash_keys = false       # hash client secret, tokens, authz code
-token_embedded_assertions = []    # username
-
-[oauth.token_persistance]
-access_token_persist_type = "token"     # token/alias_only/none
-persist_encrypted_tokens = false
-#partitioning_enabled_tenants = ["A:foo.com", "B:bar.com"]
-# pool_size = 0
-retry_count_on_failure = 5
-#token_persistance_processor = class.name
-
 
 [oauth.token_cleanup]
 enable = true
-retain_access_tokens = true
-
-[oauth.extensions]
-token_generator = "org.wso2.carbon.identity.oauth2.token.JWTTokenIssuer"
-token_value_generator = "org.wso2.carbon.identity.oauth.tokenvaluegenerator.SHA256Generator"
-saml2_token_handler = "class.name"
+retain_access_tokens_for_auditing = true
 
 [oauth.endpoints]
-oauth1_request_token_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/request-token"
-oauth1_authorize_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/authorize-url"
-oauth1_access_token_url = "${carbon.protocol}://${carbon.host}:${carbon.management.port}/oauth/access-token"
-oauth2_authz_url = ""
-oauth2_token_url = ""
-oauth2_revoke_url = ""
-oauth2_introspect_url = ""
-oauth2_user_info_url = ""
-oidc_check_session_url = ""
-oidc_logout_url = ""
-oauth2_consent_page = ""
-oauth2_error_page = ""
-oidc_consent_page = ""
-oidc_logout_consent_page = ""
-oidc_logout_page = ""
-oidc_web_finger_url = ""
-oauth2_DCREP_url = ""
-oauth2_jwks_page = ""
-oidc_discovery_url = ""
+oauth1_request_token_url = "$ref{server.base_url}/oauth/request-token"
+oauth1_authorize_url = "$ref{server.base_url}/oauth/authorize-url"
+oauth1_access_token_url = "$ref{server.base_url}/oauth/access-token"
+oauth2_authz_url = "$ref{server.base_url}/oauth2/authorize"
+oauth2_token_url = "$ref{server.base_url}/oauth2/token"
+oauth2_revoke_url = "$ref{server.base_url}/oauth2/revoke"
+oauth2_introspect_url = "$ref{server.base_url}/oauth2/introspect"
+oauth2_user_info_url = "$ref{server.base_url}/oauth2/userinfo"
+oidc_check_session_url = "$ref{server.base_url}/oidc/checksession"
+oidc_logout_url = "$ref{server.base_url}/oidc/logout"
+oidc_web_finger_url = "$ref{server.base_url}/.well-known/webfinger"
+oauth2_dcr_url = "$ref{server.base_url}/api/identity/oauth2/dcr/v1.1/register"
+oauth2_jwks_url = "$ref{server.base_url}/oauth2/jwks"
+oidc_discovery_url = "$ref{server.base_url}/oauth2/oidcdiscovery"
 
-[oauth.token_validation]
-authz_code_validity = 300
-app_access_token_validity = 3600
-user_access_token_validity = 3600
-refresh_token_validity = 84600
-id_token_validity = 3600
-build_subject_id_from_sp_config = false
+oauth2_consent_page = "$ref{server.base_url}/authenticationendpoint/oauth2_authz.do"
+oauth2_error_page = "$ref{server.base_url}/authenticationendpoint/oauth2_error.do"
+oidc_consent_page = "$ref{server.base_url}/authenticationendpoint/oauth2_consent.do"
+oidc_logout_consent_page = "$ref{server.base_url}/authenticationendpoint/oauth2_logout_consent.do"
+oidc_logout_page = "$ref{server.base_url}/authenticationendpoint/oauth2_logout.do"
 
-[oauth.consent]
-enabled_grant_types = ["implicit","authorization_code"]
+# --- Response Types --- #
+[oauth.reponse_type.token]  # Advanced
+enable = true
+class = "org.wso2.carbon.identity.oauth2.authz.handlers.AccessTokenResponseTypeHandler"
 
-[oauth.validators]
-token_validators = ["jwt","bearer"]
-scope_validatoes = ["jdbc","xacml"]
+[oauth.reponse_type.code]  # Advanced
+enable = true
+class = "org.wso2.carbon.identity.oauth2.authz.handlers.CodeResponseTypeHandler"
 
-[oauth.handlers]
-callback_handlers = ["default"]
-scope_handlers = ["oidc"]
+[oauth.reponse_type.id_token]  # Advanced
+enable = true
+class = "org.wso2.carbon.identity.oauth2.authz.handlers.IDTokenResponseTypeHandler"
 
-[oauth.oidc]
-audiences = []
-issuer_id = ""
+[oauth.reponse_type.id_token_token]  # Advanced
+enable = true
+class = "org.wso2.carbon.identity.oauth2.authz.handlers.IDTokenTokenResponseTypeHandler"
 
-[oauth.oidc.algorithms]
+[[oauth.custom_response_type]]  # Advanced
+name = "foo_response_type"
+class = "com.example.oauth.CustomResponseType"
+
+# --- End of Response Types --- #
+# --- Grant Types --- #
+
+[oauth.grant_type.authorization_code]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.AuthorizationCodeGrantHandler"
+
+[oauth.grant_type.password]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.PasswordGrantHandler"
+
+[oauth.grant_type.refresh_token]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.RefreshGrantHandler"
+
+[oauth.grant_type.saml_bearer]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.saml.SAML2BearerGrantHandler"
+user_type = "FEDERATED"     #Advanced , Backward compatibility
+
+[oauth.grant_type.iwa_ntlm]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.iwa.ntlm.NTLMAuthenticationGrantHandler"
+
+[oauth.grant_type.jwt_bearer]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.grant.jwt.JWTBearerGrantHandler"
+grant_validator = "org.wso2.carbon.identity.oauth2.grant.jwt.JWTGrantValidator"
+
+[oauth.grant_type.client_credentials]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.ClientCredentialsGrantHandler"
+allow_refresh_tokens = false
+allow_id_token = false
+
+[[oauth.custom_grant_type]]
+name = "xyz_token"
+handler_class = "com.example.identity.XYZGrantHandler"
+grant_validator = "com.example.identity.XYZGrantValidator"
+
+# --- End of Grant Types --- #
+# --- Token Validators --- #
+
+[oauth.token_validator.bearer]
+enable = true
+class = "org.wso2.carbon.identity.oauth2.validators.DefaultOAuth2TokenValidator"
+
+[oauth.token_validator.jwt]
+enable = true
+class = "org.wso2.carbon.identity.oauth2.validators.OAuth2JWTTokenValidator"
+
+[[oauth.custom_token_validator]]
+type = "foo"
+class = "com.example.identity.TokenValidator"
+
+# --- End of Token Validators --- #
+
+# --- Scope Validators --- #
+[oauth.scope_validator.jdbc]
+enable = true
+class = "org.wso2.carbon.identity.oauth2.validators.JDBCScopeValidator"
+
+[oauth.scope_validator.xacml]
+enable = true
+class = "org.wso2.carbon.identity.oauth2.validators.xacml.XACMLScopeValidator"
+
+[[oauth.custom_scope_validator]]
+type = "foo"
+class = "com.example.identity.ScopeValidator"
+
+# --- End of Scope Validators --- #
+
+[oauth.extensions]  # Advanced
+token_generator = "org.wso2.carbon.identity.oauth2.token.JWTTokenIssuer"    # overrides 'access_token_type'
+token_value_generator = "org.wso2.carbon.identity.oauth.tokenvaluegenerator.SHA256Generator"
+token_persistance_processor = "org.wso2.carbon.identity.oauth.tokenprocessor.PlainTextPersistenceProcessor" #overrides hash_tokens_and_secrets
+callback_handlers = ["org.wso2.carbon.identity.oauth.callback.DefaultCallbackHandler"]
+token_context_generator = "org.wso2.carbon.identity.oauth2.authcontext.JWTTokenGenerator"
+token_context_claim_retriever = "org.wso2.carbon.identity.oauth2.authcontext.DefaultClaimsRetriever"
+token_context_dialect_uri = "http://wso2.org/claims"
+saml2_token_handler = ""
+
+[oauth.oidc.id_token]
 signature_algorithm = "SHA256withRSA"
-default_encryption_algorithm = "RSA-OAEP"
-default_encryption_method = "A128GCM"
-supported_encryption_algorithms = ["RSA1_5", "RSA-OAEP"]
+supported_encryption_algorithms = ["RSA-OAEP","RSA1_5"]
 supported_encryption_methods = ["A128GCM","A192GCM","A256GCM","A128CBC-HS256","A128CBC+HS256"]
-user_info_jwt_algorithm = "SHA256withRSA"
+audiences = []
+issuer = "$ref{oauth2_token_url}"
 
-[oauth.oidc.extensions]
-oidc_id_token_builder = ""
-id_token_claim_callback_handler = ""
-user_info_claim_retriever = ""
-user_info_request_validator = ""
-user_info_access_token_validator = ""
-user_info_response_builder = ""
-request_object_validator = ""
+[oauth.oidc.token_validation]
+id_token_validity = "1h"
+logout_token_validity = "2m"
 
-
+[oauth.oidc.user_info]
+jwt_signature_algorithm = "$ref{oauth.oidc.id_token.signature_algorithm}"
+response_type = "json"  # json/jwt
 
 
+[oauth.oidc.extensions]     #Advanced
+claim_callback_handler = "org.wso2.carbon.identity.openidconnect.SAMLAssertionClaimsCallback"
+user_info_claim_retriever = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInfoUserStoreClaimRetriever"
+user_info_request_validator = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInforRequestDefaultValidator"
+user_info_access_token_validator = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInfoISAccessTokenValidator"
+user_info_response_builder = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInfoJSONResponseBuilder" #overrides "oauth.oidc.user_info.response_type"
+request_object_validator = "org.wso2.carbon.identity.openidconnect.RequestObjectValidatorImpl"
 
-#        <AuthorizationContextTokenGeneration>
-#            <Enabled>false</Enabled>
-#            <TokenGeneratorImplClass>org.wso2.carbon.identity.oauth2.authcontext.JWTTokenGenerator</TokenGeneratorImplClass>
-#            <ClaimsRetrieverImplClass>org.wso2.carbon.identity.oauth2.authcontext.DefaultClaimsRetriever</ClaimsRetrieverImplClass>
-#            <ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI>
-#            <SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm>
-#            <AuthorizationContextTTL>15</AuthorizationContextTTL>
-#        </AuthorizationContextTokenGeneration>
-#
-#        <SAML2Grant>
-#            <!--SAML2TokenHandler></SAML2TokenHandler-->
-#            <!-- UserType conifg decides whether the SAML assertion carrying user is local user or a federated user.
-#            Only Local Users can access claims from local userstore. LEGACY users will have to have tenant domain appended username.
-#            They will not be able to access claims from local userstore. To get claims by mapping users with exact same username from local
-#            userstore (for non LOCAL scenarios) use mapFederatedUsersToLocal config -->
-#            <!--<UserType>LOCAL</UserType>-->
-#            <UserType>FEDERATED</UserType>
-#            <!--UserType>LEGACY</UserType-->
-#            #todo can be done with the map federated user to local?
-#        </SAML2Grant>
-#
-#        <SkipUserConsent>false</SkipUserConsent>
-#                    <!-- Sign the ID Token with Service Provider Tenant Private Key-->
-#                    <SignJWTWithSPKey>false</SignJWTWithSPKey>
-#                    <!--
-#                        Expiry period of the logout token used in OIDC Back Channel Logout in seconds.
-#                        Supported versions: IS 5.5.0 onwards
-#                    -->
+# --- Request Object Builders --- #
+
+[oauth.oidc.request_object_builder.request_param_value_builder]  #Advanced
+enabled = true
+class = "org.wso2.carbon.identity.openidconnect.RequestParamRequestObjectBuilder"
+
+[[oauth.oidc.custom_request_object_builder]]             #Advanced
+type = "foo"
+class = "com.example.oauth.CustomRequestBuilder"
+
+# --- End of Request Object Builders --- #
