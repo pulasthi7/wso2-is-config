@@ -1,0 +1,37 @@
+# Reference configuration for all XACML specific configuration in IS.
+# Note 1: For the context of this file, all non XACML configuration are expected to have default values
+# Note 2: All the XACML configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
+[server]
+pattern = "DEV"
+
+
+[xacml]
+engine_cache_timeout = "1d"
+decision_cache_timeout = "5m"
+attribute_cache_timeout = "5m"
+resource_cache_timeout = "5m"
+policy_cache_timeout = "2m"
+global_policy_combining_algorithm = "urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-overrides"
+enable_shortend_json_form = false
+
+
+[xacml.thrift_authz_server]     # Advanced
+enable_thrift_server = false
+client_timeout = "10s"
+keystore_name = "$ref{keystore.tls.name}"
+keystore_password = "$ref{keystore.tls.password}"
+
+
+[[xacml.pip.attribute_designator]]   # Advanced
+class = "com.example.xacml.pip.CustomAttributeDesignator"
+[xacml.pip.attribute_designator.properties]
+key = "value"
+
+
+[[xacml.pip.resource_finder]]   # Advanced
+class = "com.example.xacml.pip.CustomResourceFinder"
+[xacml.pip.resource_finder.properties]
+key = "value"
