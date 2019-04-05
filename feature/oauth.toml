@@ -187,3 +187,8 @@ type = "foo"
 class = "com.example.oauth.CustomRequestBuilder"
 
 # --- End of Request Object Builders --- #
+
+[oauth.jwks_endpoint]   # Advanced
+connection_timeout = "1s"
+read_timeout = "1s"
+size_limit_bytes = "51200"

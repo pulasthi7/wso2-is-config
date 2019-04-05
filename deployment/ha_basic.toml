@@ -1,5 +1,4 @@
-[deployment]
-pattern = "HA"
+[server]
 hostname = "wso2is.example.com"
 proxy_port = "443"
 local_ip = "192.168.1.1"
@@ -15,7 +14,7 @@ connection_name = "uid=admin,ou=wso2is"
 connection_password = "$secret{ldap_password}"
 base_dn = "dc=example,dc=com"
 
-[database.shared_db]
+[database.core_db]
 type = "mysql"
 hostname = "mysql.example.com"
 database = "wso2regdb"
@@ -37,3 +36,8 @@ password = "$secret{key_password}"
 
 [cluster]
 members = ["192.168.1.1:4000","192.168.1.2:4000"]
+
+[secrets]
+db_password = "[R!#etoqe]"
+keystore_password = "[T@h3rerqr]"
+ldap_password = "[bwet*4rwW]"

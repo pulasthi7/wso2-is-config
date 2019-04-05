@@ -1,7 +1,7 @@
 [deployment]
 pattern = "DEV"
 
-[[event_handler]]
+[[custom_event_handler]]
 name="custom_handler"
 subscriptions=["POST_AUTHENTICATION"]
 [event_handler.properties]

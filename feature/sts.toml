@@ -1,0 +1,11 @@
+[deployment]
+pattern = "DEV"
+
+[sts]
+idp_url = "$ref{server.base_url}/services/wso2carbon-sts"
+
+[passive_sts]
+idp_url = "$ref{server.base_url}/passivests"
+retry_url = "$ref{server.base_url}/authenticationendpoint/retry.do"
+token_store = "org.wso2.carbon.identity.sts.passive.utils.NoPersistenceTokenStore"  # Advanced
+slo_hostname_verification = true    # Advanced

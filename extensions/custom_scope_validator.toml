@@ -1,6 +1,0 @@
-[deployment]
-pattern = "DEV"
-hostname = "localhost"
-
-[oauth]
-scope_validators = ["org.wso2.carbon.identity.oauth2.validators.CustomJDBCScopeValidator"]

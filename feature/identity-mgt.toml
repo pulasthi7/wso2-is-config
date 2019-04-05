@@ -40,6 +40,9 @@ allowed_failed_attempts = 5
 auto_unlock_after = "5m"
 auto_unlock_time_increment_ratio = 2
 
+[identity_mgt.login_recaptcha]
+enable_recaptcha = true
+allowed_failed_attempts = 5
 
 [identity_mgt.account_disabling]
 enable_account_disabling = false

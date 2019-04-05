@@ -1,7 +1,7 @@
 [deployment]
 pattern = "DEV"
 
-[[event_listener]]
+[[custom_event_listener]]
 id = "custom_audit_listener"
 type = "org.wso2.carbon.identity.core.handler.AbstractIdentityMessageHandler"
 name = "com.example.identity.AuditListener"
