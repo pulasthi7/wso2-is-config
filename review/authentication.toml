@@ -30,7 +30,7 @@ password_provisioning_url = "/accountrecoveryendpoint/signup.do"
 idle_timeout = "15m"
 remember_me_timeout = "14d"
 
-[session_data.persistance]
+[session_data.persistence]
 persist_synchronously = true    # Advanced
 persistance_pool_size = 0       # Advanced
 persist_temporary_data = true
@@ -76,4 +76,3 @@ auth_password = ""
 connection_timeout = "5s"
 read_timeout = "5s"
 request_timeout = "5s"
-
