@@ -1,4 +1,4 @@
-[deployment]
+[server]
 pattern = "DEV"
 time_skew = "0m"    # Advanced
 

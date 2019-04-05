@@ -1,4 +1,4 @@
-[deployment]
+[server]
 pattern = "DEV"
 
 [sts]

@@ -4,7 +4,7 @@
 #   which they wish to change from default (with the section header)
 # Note 3: For reference purposes the default value is set here as the value.
 
-[deployment]
+[server]
 pattern = "DEV"
 
 [identity_mgt]
@@ -35,7 +35,7 @@ enable_username_recovery = false
 enable_recaptcha = true
 
 
-[identity_mgt.account_locking]
+[identity_mgt.account_locking] # todo Move to authentication section?
 allowed_failed_attempts = 5
 auto_unlock_after = "5m"
 auto_unlock_time_increment_ratio = 2
@@ -87,4 +87,3 @@ lock_on_creation = false
 enable_recaptcha = true
 verification_email_validity = "1d"
 
-# failLoginAttemptValidator should be inferred with captcha enabled

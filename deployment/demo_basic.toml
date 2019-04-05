@@ -1,4 +1,4 @@
-[deployment]
+[server]
 # DEV inferres the default configuration which is equivalant to the current default values.
 # Users are able to run the server in the local machines just by adding the following.
 pattern = "DEV"

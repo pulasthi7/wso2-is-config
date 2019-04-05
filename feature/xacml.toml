@@ -4,7 +4,7 @@
 #   which they wish to change from default (with the section header)
 # Note 3: For reference purposes the default value is set here as the value.
 
-[deployment]
+[server]
 pattern = "DEV"
 
 
