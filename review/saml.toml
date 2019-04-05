@@ -1,0 +1,39 @@
+# Reference configuration for all SAML specific configuration in IS.
+# Note 1: For the context of this file, all non SAML configuration are expected to have default values
+# Note 2: All the SAML configuration is listed here, but all are optional. User only need to include any configuration
+#   which they wish to change from default (with the section header)
+# Note 3: For reference purposes the default value is set here as the value.
+
+[server]
+pattern = "DEV"
+
+[saml]
+entity_id = "$ref{deployment.hostname}"
+response_validity = "5m"
+artifact_validity = "4m"
+
+[saml.assertion_query_profile]
+enable = false
+
+[saml.endpoints]
+# Following configurations are required only if authentication endpoint is hosted seperately
+logout_url = "$ref{deployment.base_path}/authenticationendpoint/samlsso_logout.do"
+notification_url = "$ref{deployment.base_path}/authenticationendpoint/samlsso_notification.do"
+
+# Following configurations are required only if LB uses URL rewriting, instead of using reverse proxy
+artifact_resolution_url = "$ref{deployment.base_path}/samlartresolve"
+idp_url = "$ref{deployment.base_path}/samlsso"
+ecp_url = "$ref{deployment.base_path}/samlecp"
+
+[saml.slo]
+retry_attempts_count = 5
+retry_interval = "1m"
+hostname_verification = true
+back_channel_slo_binding = "soap"
+
+[saml.extensions]
+assertion_builder = "org.wso2.carbon.identity.sso.saml.builders.assertion.DefaultSAMLAssertionBuilder"
+response_builder = "org.wso2.carbon.identity.sso.saml.builders.DefaultResponseBuilder"
+encrypter = "org.wso2.carbon.identity.sso.saml.builders.encryption.DefaultSSOEncrypter"
+signer = "org.wso2.carbon.identity.sso.saml.builders.signature.DefaultSSOSigner"
+signature_validator = "org.wso2.carbon.identity.sso.saml.validators.SAML2HTTPRedirectDeflateSignatureValidator"
