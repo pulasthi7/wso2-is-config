@@ -1,0 +1,79 @@
+[server]
+pattern = "DEV"
+
+[authentication]
+map_federated_users_to_local = true         # Advanced
+sign_auth_response_with_tenant_of = "sp"     # sp/user
+
+[authentication.consent]
+prompt = true
+
+[authentication.pii_controller]
+name = "change-me"
+contact = "change-me"
+email = "change-me"
+phone = "change-me"
+on_behalf = false
+url = "change-me"
+country = "change-me"
+locality = "change-me"
+region = "change-me"
+po_box = "change-me"
+postal_code = "change-me"
+street_address = "change-me"
+
+[authentication.jit_provisioning]
+username_provisioning_url = "/accountrecoveryendpoint/register.do"
+password_provisioning_url = "/accountrecoveryendpoint/signup.do"
+
+[session.timeout]
+idle_timeout = "15m"
+remember_me_timeout = "14d"
+
+[session_data.persistance]
+persist_synchronously = true    # Advanced
+persistance_pool_size = 0       # Advanced
+persist_temporary_data = true
+
+[session_data.cleanup]
+expire_session_data_after = "$ref{session.timeout.remember_me_timeout}"
+expire_pre_session_data_after = "40m"
+clean_expired_session_data_every = "1d"
+clean_expired_session_data_in_chunks_of = "8192"
+clean_logged_out_sessions_at_immediate_cycle = false
+clean_pre_session_data_at = "invalidation"  # invalidation/expiration
+pre_session_data_cleanup_thread_pool_size = 20     # Advanced
+
+[authentication.analytics]
+publish_authentication_event_types = [
+    "AUTHENTICATION_STEP_SUCCESS",
+    "AUTHENTICATION_STEP_FAILURE",
+    "AUTHENTICATION_SUCCESS",
+    "AUTHENTICATION_FAILURE"]
+publish_session_event_types = [
+    "SESSION_CREATE",
+    "SESSION_UPDATE",
+    "SESSION_TERMINATE"]
+
+[authentication.auditing]
+log_event_types = [
+    "AUTHENTICATION_STEP_SUCCESS",
+    "AUTHENTICATION_STEP_FAILURE",
+    "AUTHENTICATION_SUCCESS",
+    "AUTHENTICATION_FAILURE",
+    "SESSION_TERMINATE"]
+
+[adaptive_authentication]
+prompt_on_async_external_calls = false
+refresh_for_async_call_completion_every = "1s"
+async_call_timeout = "10s"
+async_call_executor_pool_size = 5
+
+[adaptive_authentication.analytics_engine]
+publishing_endpoint = ""    #eg. "https://localhost:8280/"
+auth_username = ""
+auth_password = ""
+connection_timeout = "5s"
+read_timeout = "5s"
+request_timeout = "5s"
+
