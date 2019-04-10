@@ -15,5 +15,12 @@ max_bulk_payload = 1048576      # Advanced
 documentation_uri = "https://docs.wso2.com/display/IS570/apidocs/SCIM2-endpoints/index.html"
 basic_auth_documentation_uri = "$ref{documentation_uri}"
 oauth_bearer_auth_documentation_uri = "$ref{documentation_uri}"
+enable_complex_multivalued_attribute_support = false
+primary_authentication_scheme = "oauthbearertoken" #httpbasic
+# This will infer what is the primary authentication schema in charon-config.xml
+
+[scim2.endpoints]
+users_endpoint = "$ref{base_path}/wso2/scim2/Users"
+groups_endpoint = "$ref{base_path}/wso2/scim2/Groups"
 
 

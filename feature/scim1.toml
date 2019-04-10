@@ -11,6 +11,7 @@ pattern = "DEV"
 enable = true
 enable_schema_extension = false
 passthrough_outbound_provisioning = false      # For Dumb mode
+enable_complex_multivalued_attribute_support = false #advance
 
 [scim.endpoints]
 users_endpoint = "$ref{base_path}/wso2/scim/Users"
