@@ -28,17 +28,19 @@ username_provisioning_url = "/accountrecoveryendpoint/register.do"
 password_provisioning_url = "/accountrecoveryendpoint/signup.do"
 
 [session.timeout]
-idle_timeout = "15m"
-remember_me_timeout = "14d"
+idle_session_timeout = "15m"
+remember_me_session_timeout = "14d"
 
 [session_data.persistence]
-persist_synchronously = true    # Advanced
+enable_persistance = true       # Advanced
 persistance_pool_size = 0       # Advanced
 persist_temporary_data = true
 
 [session_data.cleanup]
 expire_session_data_after = "$ref{session.timeout.remember_me_timeout}"
 expire_pre_session_data_after = "40m"
+enable_expired_data_cleanup = true
+enable_pre_session_data_cleanup = true
 clean_expired_session_data_every = "1d"
 clean_expired_session_data_in_chunks_of = "8192"
 clean_logged_out_sessions_at_immediate_cycle = false
@@ -64,7 +66,7 @@ log_event_types = [
     "AUTHENTICATION_FAILURE",
     "SESSION_TERMINATE"]
 
-[authentication.extensions]
+[authentication.framework.extensions]
 request_cordinator = "org.wso2.carbon.identity.application.authentication.framework.handler.request.impl.DefaultRequestCoordinator"
 authentication_request_handler = "org.wso2.carbon.identity.application.authentication.framework.handler.request.impl.DefaultAuthenticationRequestHandler"
 logout_request_handler = "org.wso2.carbon.identity.application.authentication.framework.handler.request.impl.DefaultAuthenticationRequestHandler"
@@ -80,13 +82,91 @@ login_url = "/authenticationendpoint/login.do"
 retry_url = "/authenticationendpoint/retry.do"
 request_missing_claims_url = "/authenticationendpoint/claims.do"
 
-[authentication.endpoint.query_params_filter]   # advanced
-action = "exclude"  # exclude, include
-parameters = []
+[authentication.endpoint.query_params]   # advanced
+filter_policy = "exclude"  # exclude, include
+filter_parameters = []
 
 [authentication.endpoint.redirect_params_filter]
-action = "exclude"  # exclude, include
+policy = "exclude"  # exclude, include
+remove_on_consume_from_api = true
 parameters = []
+
+[authentication.authenticator.basic]
+enable = true
+[authentication.authenticator.basic.parameters]
+auth_mechanism = "basic"
+
+[authentication.authenticator.user_identifier]
+enable = true
+[authentication.authenticator.user_identifier.parameters]
+validate_username = false
+
+[authentication.authenticator.oauth_request_path]
+enable = true
+
+[authentication.authenticator.basic_request_path]
+enable = true
+[authentication.authenticator.basic_request_path.parameters]
+auth_mechanism = "basic"
+
+[authentication.authenticator.saml]
+enable = true
+
+[authentication.authenticator.oidc]
+enable = true
+
+[authentication.authenticator.google]
+enable = true
+[authentication.authenticator.google.parameters]
+token_endpoint = "https://accounts.google.com/o/oauth2/token"
+authz_endpoint = "https://accounts.google.com/o/oauth2/auth"
+user_info_endpoint = "https://www.googleapis.com/oauth2/v3/userinfo"
+
+[authentication.authenticator.microsoft_live]
+enable = true
+[authentication.authenticator.microsoft_live.parameters]
+token_endpoint = "https://login.live.com/oauth20_token.srf"
+authz_endpoint = "https://login.live.com/oauth20_authorize.srf"
+user_info_endpoint = "https://apis.live.net/v5.0/me?access_token="
+
+[authentication.authenticator.facebook]
+enable = true
+[authentication.authenticator.facebook.parameters]
+token_endpoint = "https://graph.facebook.com/oauth/access_token"
+authz_endpoint = "http://www.facebook.com/dialog/oauth"
+user_info_endpoint = "https://graph.facebook.com/me"
+
+
+[authentication.authenticator.yahoo]
+enable = true
+[authentication.authenticator.yahoo.parameters]
+token_endpoint = "https://api.login.yahoo.com/oauth2/get_token"
+authz_endpoint = "https://api.login.yahoo.com/oauth2/request_auth"
+user_info_endpoint = "https://social.yahooapis.com/v1/user/"
+
+[authentication.authenticator.fido]
+enable = true
+[authentication.authenticator.fido.parameters]
+authentication_page_url = "/authenticationendpoint/fido-auth.jsp"
+
+[authentication.authenticator.mobile_connect]
+enable = true
+[authentication.authenticator.mobile_connect.parameters]
+authentication_page_url = "mobileconnectauthenticationendpoint/mobileconnect.jsp"
+discovery_api_url = "https://discover.mobileconnect.io/gsma/v2/discovery/"
+redirect_to_multi_option_page_on_failure = false
+
+[authentication.authenticator.email_otp]
+enable = true
+
+[authentication.authenticator.sms_otp]
+enable = true
+
+[authentication.authenticator.x509_certificate]
+enable = true
+[authentication.authenticator.x509_certificate.parameters]
+authentication_endpoint = "https://localhost:8443/x509-certificate-servlet"
+username = "CN"
 
 [[authentication.custom_authenticator]]     #advanced
 name = ""
