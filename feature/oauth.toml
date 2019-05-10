@@ -4,11 +4,15 @@ time_skew = "0m"    # Advanced
 
 [oauth]
 hash_tokens_and_secrets = false
+hash_token_algorithm = "SHA-256" #Advanced
+consent_prompt = true # Advanced - This can be inferred from framework level authentication.consent.prompt
+timestamp_skew = "0m" #Advanced this can be infer by the sever.time_skew as well.
 
 [oauth.token_generation]
-access_token_type = "default"  # default/self-contained
+access_token_type = "default"  # default/self_contained
 access_token_value_type = "UUID" # MD5/SHA-256      #Advanced
 retry_count_on_persistance_failures = 5         #Advanced
+include_username_in_access_token = false #Related to username assertion
 
 [oauth.token_validation]
 authorization_code_validity = "5m"
@@ -22,6 +26,7 @@ validation_response_subject_identifier_format = "fqn"  # fqn/app_configured     
 
 [oauth.token_renewal]
 renew_refresh_token = true
+renew_access_token_per_request = false
 
 [oauth.token_cleanup]
 enable = true
@@ -50,19 +55,19 @@ oidc_logout_consent_page = "$ref{server.base_url}/authenticationendpoint/oauth2_
 oidc_logout_page = "$ref{server.base_url}/authenticationendpoint/oauth2_logout.do"
 
 # --- Response Types --- #
-[oauth.reponse_type.token]  # Advanced
+[oauth.response_type.token]  # Advanced
 enable = true
 class = "org.wso2.carbon.identity.oauth2.authz.handlers.AccessTokenResponseTypeHandler"
 
-[oauth.reponse_type.code]  # Advanced
+[oauth.response_type.code]  # Advanced
 enable = true
 class = "org.wso2.carbon.identity.oauth2.authz.handlers.CodeResponseTypeHandler"
 
-[oauth.reponse_type.id_token]  # Advanced
+[oauth.response_type.id_token]  # Advanced
 enable = true
 class = "org.wso2.carbon.identity.oauth2.authz.handlers.IDTokenResponseTypeHandler"
 
-[oauth.reponse_type.id_token_token]  # Advanced
+[oauth.response_type.id_token_token]  # Advanced
 enable = true
 class = "org.wso2.carbon.identity.oauth2.authz.handlers.IDTokenTokenResponseTypeHandler"
 
@@ -105,9 +110,15 @@ grant_handler = "org.wso2.carbon.identity.oauth2.token.handlers.grant.ClientCred
 allow_refresh_tokens = false
 allow_id_token = false
 
+[oauth.grant_type.uma_ticket]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth.uma.grant.UMA2GrantHandler"
+grant_validator = "org.wso2.carbon.identity.oauth.uma.grant.GrantValidator"
+
 [[oauth.custom_grant_type]]
 name = "xyz_token"
 handler_class = "com.example.identity.XYZGrantHandler"
+[oauth.custom_grant_type.properties]
 grant_validator = "com.example.identity.XYZGrantValidator"
 
 # --- End of Grant Types --- #
@@ -147,6 +158,7 @@ token_generator = "org.wso2.carbon.identity.oauth2.token.JWTTokenIssuer"    # ov
 token_value_generator = "org.wso2.carbon.identity.oauth.tokenvaluegenerator.SHA256Generator"
 token_persistance_processor = "org.wso2.carbon.identity.oauth.tokenprocessor.PlainTextPersistenceProcessor" #overrides hash_tokens_and_secrets
 callback_handlers = ["org.wso2.carbon.identity.oauth.callback.DefaultCallbackHandler"]
+scope_handlers = ["org.wso2.carbon.identity.oauth2.validators.OIDCScopeHandler"]
 token_context_generator = "org.wso2.carbon.identity.oauth2.authcontext.JWTTokenGenerator"
 token_context_claim_retriever = "org.wso2.carbon.identity.oauth2.authcontext.DefaultClaimsRetriever"
 token_context_dialect_uri = "http://wso2.org/claims"
@@ -154,7 +166,9 @@ saml2_token_handler = ""
 
 [oauth.oidc.id_token]
 signature_algorithm = "SHA256withRSA"
+#First element in the array is used as the id_token encryption algorithm
 supported_encryption_algorithms = ["RSA-OAEP","RSA1_5"]
+#First element in the array is used as the id_token encryption method
 supported_encryption_methods = ["A128GCM","A192GCM","A256GCM","A128CBC-HS256","A128CBC+HS256"]
 audiences = []
 issuer = "$ref{oauth2_token_url}"
@@ -175,6 +189,11 @@ user_info_request_validator = "org.wso2.carbon.identity.oauth.endpoint.user.impl
 user_info_access_token_validator = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInfoISAccessTokenValidator"
 user_info_response_builder = "org.wso2.carbon.identity.oauth.endpoint.user.impl.UserInfoJSONResponseBuilder" #overrides "oauth.oidc.user_info.response_type"
 request_object_validator = "org.wso2.carbon.identity.openidconnect.RequestObjectValidatorImpl"
+id_token_builder = "org.wso2.carbon.identity.openidconnect.DefaultIDTokenBuilder"
+
+[oauth.oidc.claims]
+enable_unmapped_user_attributes = false #Advance
+enable_oidc_dialect = false #Advance - https://docs.wso2.com/display/IS580/Handling+Custom+Claims+with+the+JWT+Bearer+Grant+Type
 
 # --- Request Object Builders --- #
 
@@ -189,6 +208,7 @@ class = "com.example.oauth.CustomRequestBuilder"
 # --- End of Request Object Builders --- #
 
 [oauth.jwks_endpoint]   # Advanced
+enable = true
 connection_timeout = "1s"
 read_timeout = "1s"
 size_limit_bytes = "51200"
