@@ -1,0 +1,8 @@
+[server]
+pattern = "DEV"
+
+[masking_pattern.properties]
+'masking.pattern.sample.CREDIT_CARD_AMEX' = "[34|37][0-9]{14}$"
+
+#No need to configure the file path in log4j.properties file.
+#Cannot give a new file for masking
