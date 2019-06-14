@@ -1,0 +1,24 @@
+[server]
+pattern = "DEV"
+
+[carbon_health_check]
+enable = false
+
+[carbon_health_check.health_checker.data_source_health_checker]
+order = "97"
+enable = true
+pool_usage_limit_percentage = "80"
+[carbon_health_check.health_checker.data_source_health_checker.properties]
+'monitored.datasources' = "jdbc/WSO2CarbonDB,jdbc/WSO2MetricsDB,jdbc/WSO2UMDB" #use single quotes if the key should contain dots in the middle.
+
+[carbon_health_check.health_checker.super_tenant_health_checker]
+order = "98"
+enable = true
+[carbon_health_check.health_checker.super_tenant_health_checker.properties]
+'monitored.user.stores' = "primary,sec"
+
+[[health_checker]] #For a custom health checker
+name = "custom_health_checker"
+order = "98"
+[health_checker.properties]
+'monitored.user.stores' = "primary,sec"
