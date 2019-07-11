@@ -3,7 +3,7 @@ pattern = "DEV"
 
 [database.shared_db]
 type = "postgresql"
-hostname = "mysql.example.com"
+hostname = "postgre.example.com"
 database = "wso2isdb"
 password = "$secret{db_password}"
 
