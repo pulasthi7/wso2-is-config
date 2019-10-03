@@ -44,14 +44,14 @@ ldap_connection_timeout  =  5000
 read_timeout   =   ""
 retry_attempts   =   ""
 start_tls_enabled  =  false
-username_java_regex  =  "[a-zA-Z0-9._\-|//]{3,30}$"
-rolename_java_regex  =  "[a-zA-Z0-9._\-|//]{3,30}$"
-username_javascript_regex = "^[\S]{3,30}$"
+username_java_regex  =  "[a-zA-Z0-9._\\-|//]{3,30}$"
+rolename_java_regex  =  "[a-zA-Z0-9._\\-|//]{3,30}$"
+username_javascript_regex = "^[\\S]{3,30}$"
 username_java_regex_violation_error_msg = "Username pattern policy violated"
-password_java_regex = "^[\S]{5,30}$"
-password_javascript_regex = "^[\S]{5,30}$"
+password_java_regex = "^[\\S]{5,30}$"
+password_javascript_regex = "^[\\S]{5,30}$"
 password_java_regex_violation_error_msg = "Password length should be within 5 to 30 characters"
-rolename_javascript_regex = "^[\S]{3,30}$"
+rolename_javascript_regex = "^[\\S]{3,30}$"
 
 [secrets]
 ldap_password = "encrypted_value_1"
