@@ -38,9 +38,9 @@ ldap_connection_timeout  =  5000
 read_timeout  =  ""
 retry_attempts  =  ""
 replace_escape_characters_at_user_login  =  true
-username_java_regex = "[a-zA-Z0-9._\-|//]{3,30}$"
-rolename_java_regex = "[a-zA-Z0-9._\-|//]{3,30}$"
-password_java_regex = "^[\S]{5,30}$"
+username_java_regex = "[a-zA-Z0-9._\\-|//]{3,30}$"
+rolename_java_regex = "[a-zA-Z0-9._\\-|//]{3,30}$"
+password_java_regex = "^[\\S]{5,30}$"
 
 [secrets]
 ldap_password = "encrypted_value_1"
