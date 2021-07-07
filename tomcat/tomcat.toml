@@ -1,0 +1,8 @@
+[server]
+pattern = "DEV"
+
+[tomcat.global]#advance
+session_timeout = "30m"
+
+[tomcat.management_console]#advance
+session_timeout = "15m"
