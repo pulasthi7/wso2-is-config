@@ -1,0 +1,15 @@
+[server]
+pattern = "DEV"
+
+
+[owasp.csrfguard] #Advance
+create_token_per_page = false #True to create csrf token per page. When false csrf token per session. There is a performance impact
+token_length = "32" #To increase csrf token length for extra security
+random_number_generator_algo = "SHA1PRNG" #To change Pseudo-random Number Generator algo for extra security
+
+[owasp.csrfguard.js_servlet]
+x_request_with_header = "WSO2 CSRF Protection"
+
+[[owasp.csrfguard.unprotected.service]] #For a custom service
+name = "oauthiwa"
+service = "%servletContext%/commonauth/iwa/*"
